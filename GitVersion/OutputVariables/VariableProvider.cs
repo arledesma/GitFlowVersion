@@ -23,6 +23,7 @@
         public const string PreReleaseTag = "PreReleaseTag";
         public const string PreReleaseTagWithDash = "PreReleaseTagWithDash";
         public const string InformationalVersion = "InformationalVersion";
+        public const string NuGetVersion = "nuget";
 
         public static Dictionary<string, string> GetVariablesFor(SemanticVersion semanticVersion)
         {
@@ -49,7 +50,8 @@
                     semanticVersion.BuildMetaData.CommitsSinceTag ?? 0,
                     semanticVersion.PreReleaseTag.HasTag() ? "-" + semanticVersion.PreReleaseTag : null)},
                 {BranchName, semanticVersion.BuildMetaData.Branch},
-                {Sha, semanticVersion.BuildMetaData.Sha}
+                {Sha, semanticVersion.BuildMetaData.Sha},
+                {NuGetVersion, semanticVersion.ToString("n", formatter)}
             };
 
             return variables;

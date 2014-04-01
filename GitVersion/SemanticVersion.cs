@@ -180,6 +180,7 @@ namespace GitVersion
         /// <para>ip - Informational SemVer with padded tag [1.2.3-beta.0004+5.Branch.master.BranchType.Master.Sha.000000]</para>
         /// <para>j - Just the SemVer part [1.2.3]</para>
         /// <para>t - SemVer with the tag [1.2.3-beta.4]</para>
+        /// <para>n - NuGet Compatible SemVer [1.2.3-Unreleased0001</para>
         /// </summary>
         public string ToString(string format, IFormatProvider formatProvider = null)
         {
@@ -225,6 +226,12 @@ namespace GitVersion
                         var buildMetadata = BuildMetaData.ToString("f");
 
                         return !string.IsNullOrEmpty(buildMetadata) ? string.Format("{0}+{1}", ToString("sp"), buildMetadata) : ToString("sp");
+                    }
+                case "n":
+                    {
+                        var buildMetadata = PreReleaseTag;
+
+                        return !string.IsNullOrEmpty(buildMetadata) ? string.Format("{0}-{1}", ToString("j"), buildMetadata) : ToString("sp");
                     }
                 default:
                     throw new ArgumentException("Unrecognised format", "format");
